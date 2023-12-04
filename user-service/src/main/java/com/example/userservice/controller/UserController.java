@@ -1,14 +1,18 @@
 package com.example.userservice.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.example.userservice.dto.Greeting;
-import com.example.userservice.dto.RequestUser;
-import com.example.userservice.dto.ResponseUser;
+import com.example.userservice.dto.UserOrderResponse;
+import com.example.userservice.dto.UserRequest;
+import com.example.userservice.dto.UserResponse;
 import com.example.userservice.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +37,17 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<ResponseUser> createUser(final @RequestBody RequestUser user) {
+    public ResponseEntity<UserResponse> createUser(final @RequestBody UserRequest user) {
         return new ResponseEntity<>(userService.createUser(user), CREATED);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), OK);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserOrderResponse> getUserByUserId(final @PathVariable String userId) {
+        return new ResponseEntity<>(userService.getUserByUserId(userId), OK);
     }
 }

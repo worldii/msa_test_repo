@@ -1,7 +1,6 @@
 package com.example.userservice.dto;
 
 import com.example.userservice.model.UserEntity;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseUser {
+public class UserResponse {
 
     private Long id;
     private String email;
@@ -17,8 +16,8 @@ public class ResponseUser {
     private String userId;
     private String encryptedPwd;
 
-    public static ResponseUser toUserDto(final UserEntity userEntity) {
-        return new ResponseUser(
+    public static UserResponse toUserDto(final UserEntity userEntity) {
+        return new UserResponse(
                 userEntity.getId(),
                 userEntity.getEmail(),
                 userEntity.getName(),
