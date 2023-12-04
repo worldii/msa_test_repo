@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import com.example.userservice.dto.Greeting;
 import com.example.userservice.dto.RequestUser;
+import com.example.userservice.dto.ResponseUser;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Long> createUser(final @RequestBody RequestUser user) {
+    public ResponseEntity<ResponseUser> createUser(final @RequestBody RequestUser user) {
         return new ResponseEntity<>(userService.createUser(user), CREATED);
     }
 }
