@@ -7,6 +7,7 @@ import com.example.userservice.model.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public ResponseUser createUser(final RequestUser user) {
@@ -32,7 +34,7 @@ public class UserService {
             .name(user.getName())
             .pwd(user.getPwd())
             .userId(newUserId)
-            .encryptedPwd("encryptedPwd")
+            .encryptedPwd(passwordEncoder.encode(user.getPwd()))
             .build();
     }
 }
