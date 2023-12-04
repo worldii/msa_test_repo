@@ -1,4 +1,4 @@
-package com.example.userservice.controller;
+package com.example.userservice.dto;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
