@@ -14,7 +14,26 @@ spring:
   cloud:
       gateway:
         routes:
-          - id: user-service
-            uri: lb://user-service
+          - id: first-service
+            uri: http://localhost:8081/
             predicates:
-              - Path=/users/**
+              - Path=/first-service/**
+            filters:
+              - AddRequestHeader= first-request, first-request-header2
+              - AddResponseHeader= first-response, first-response-header2
+
+          - id: second-service
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/second-service/**
+            filters:
+              - AddRequestHeader= second-request, second-request-header2
+              - AddResponseHeader= second-response, second-response-header2
+
+          - id: user-service
+            uri: http://localhost:8093/
+            predicates:
+              - Path=/user-service/**
+            filters:
+              - AddRequestHeader= user-request, user-request-header2
+              - AddResponseHeader= user-response, user-response-header2
