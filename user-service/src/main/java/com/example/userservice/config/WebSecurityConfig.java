@@ -1,5 +1,6 @@
 package com.example.userservice.config;
 
+import jakarta.servlet.Filter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
@@ -22,7 +23,15 @@ public class WebSecurityConfig {
             )
             .headers(headers -> headers.cacheControl(CacheControlConfig::disable)
                 .frameOptions(FrameOptionsConfig::disable)
-            )
+            ).addFilter(getAuthenticationFilter())
             .build();
     }
+
+    private AuthenticationFilter getAuthenticationFilter() {
+        final AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        authenticationFilter.setAuthenticationManager(null);
+        return authenticationFilter;
+    }
+
+
 }

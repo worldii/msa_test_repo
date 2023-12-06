@@ -12,13 +12,17 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -60,4 +64,19 @@ public class UserService {
             collect(Collectors.toList());
     }
 
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        final UserEntity userEntity = userRepository.findByEmail(username)
+            .orElseThrow(() -> new UsernameNotFoundException(username));
+
+        return new User(
+            userEntity.getEmail(),
+            userEntity.getEncryptedPwd(),
+            true,
+            true,
+            true,
+            true,
+            new ArrayList<>()
+        );
+    }
 }
