@@ -24,6 +24,11 @@ public class UserController {
     private final Greeting greeting;
     private final UserService userService;
 
+    @GetMapping("/")
+    public String loginDefaultSuccess() {
+        return "login success";
+    }
+
     @GetMapping("/health_check")
     public String status() {
         return "It's Working in User Service";

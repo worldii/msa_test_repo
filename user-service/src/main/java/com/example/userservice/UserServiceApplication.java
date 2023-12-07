@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 // TODO : 인증 단계 아직 개발 X
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class UserServiceApplication {
 
 	public static void main(String[] args) {

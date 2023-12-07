@@ -19,22 +19,24 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         final HttpServletRequest request, final HttpServletResponse response
     ) throws AuthenticationException {
         try {
-            final LoginRequest loginRequest = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+            final LoginRequest loginRequest = new ObjectMapper().readValue(
+                request.getInputStream(), LoginRequest.class);
             final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                 loginRequest.getEmail(),
                 loginRequest.getPassword()
             );
+
             return getAuthenticationManager().authenticate(authentication);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-
     @Override
     protected void successfulAuthentication(
         final HttpServletRequest request, final HttpServletResponse response,
-        final FilterChain chain, final Authentication authResult)
+        final FilterChain chain, final Authentication authResult
+    )
         throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
     }
