@@ -1,11 +1,13 @@
 package com.example.userservice.config;
 
+import com.example.userservice.service.TokenService;
+import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,8 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Slf4j
 public class WebSecurityConfig {
 
-    private final CustomAuthenticationManager customAuthenticationManager;
-    private final Environment environment;
+    private final TokenService tokenService;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
@@ -40,11 +43,6 @@ public class WebSecurityConfig {
     }
 
     private AuthenticationFilter getAuthenticationFilter() {
-
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(customAuthenticationManager);
-        authenticationFilter.setEnvironment(environment);
-
-        return authenticationFilter;
+        return new AuthenticationFilter(userService, tokenService, authenticationManager);
     }
 }
