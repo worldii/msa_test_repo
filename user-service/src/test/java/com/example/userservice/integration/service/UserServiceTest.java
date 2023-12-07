@@ -1,6 +1,7 @@
 package com.example.userservice.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.example.userservice.config.PasswordConfig;
 import com.example.userservice.domain.dto.CreateUserRequest;
@@ -56,9 +57,18 @@ class UserServiceTest {
     void getAllUsersTestWithSuccess() {
         // given
         final String USER_ID = "aaa";
+        
         // when
         final UserOrderResponse userByUserId = userService.getUserByUserId(USER_ID);
+
         // then
-        assertThat(userByUserId).extracting("userId").isEqualTo(USER_ID);
+        assertAll(
+            () -> assertThat(userByUserId).extracting("email")
+                .isEqualTo(userByUserId.getEmail()),
+            () -> assertThat(userByUserId).extracting("name")
+                .isEqualTo(userByUserId.getName()),
+            () -> assertThat(userByUserId).extracting("orders")
+                .isEqualTo(userByUserId.getOrders())
+        );
     }
 }

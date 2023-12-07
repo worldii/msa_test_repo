@@ -1,6 +1,7 @@
 package com.example.userservice.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 import com.example.userservice.domain.UserEntity;
@@ -42,7 +43,12 @@ class UserServiceMockTest {
         LoginSuccessResponse userDetailsByEmail = userService.getUserDetailsByEmail(email);
 
         // then
-        assertThat(userDetailsByEmail).extracting("email").isEqualTo(email);
+        assertAll(
+            () -> assertThat(userDetailsByEmail).extracting("email").isEqualTo(email),
+            () -> assertThat(userDetailsByEmail).extracting("name").isEqualTo("jongha"),
+            () -> assertThat(userDetailsByEmail).extracting("userId").isEqualTo("jongha"),
+            () -> assertThat(userDetailsByEmail).extracting("encryptedPwd").isEqualTo("1234")
+        );
     }
 
 
@@ -63,6 +69,9 @@ class UserServiceMockTest {
         final UserDetails userDetails = userService.loadUserByUsername(email);
 
         // then
-        assertThat(userDetails).extracting("username").isEqualTo(email);
+        assertAll(
+            () -> assertThat(userDetails).extracting("username").isEqualTo(email),
+            () -> assertThat(userDetails).extracting("password").isEqualTo("1234")
+        );
     }
 }
