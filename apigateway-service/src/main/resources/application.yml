@@ -14,10 +14,6 @@ spring:
   cloud:
       gateway:
         routes:
-            - id: user-service
-              uri: lb://USER-SERVICE
-              predicates:
-              - Path=/user-service/**
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:
@@ -26,3 +22,14 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
               - Path=/order-service/**
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user-service/**
+                - Method=GET
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+logging:
+  level:
+    io.netty.resolver.dns: DEBUG
