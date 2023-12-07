@@ -31,5 +31,11 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 greeting:
   message: Hello World
+logging:
+  level:
+    com.example.userservice: DEBUG
 
+token:
+  expiration_time: 86400000
+  secret: user_secret
 

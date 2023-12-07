@@ -1,17 +1,17 @@
-package com.example.userservice.integration;
+package com.example.userservice.integration.repository;
 
-import com.example.userservice.model.UserEntity;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.example.userservice.domain.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @DisplayName("UserRepository 클래스")
 class UserRepositoryTest {

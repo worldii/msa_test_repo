@@ -1,6 +1,5 @@
-package com.example.userservice.model;
+package com.example.userservice.domain;
 
-import com.example.userservice.dto.UserDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,11 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Builder
 public class UserEntity {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 50, unique = true)
@@ -34,13 +34,4 @@ public class UserEntity {
 
     @Column(nullable = false, unique = false)
     private String encryptedPwd;
-
-    public static UserEntity toEntity(final UserDto userDto) {
-        return UserEntity.builder()
-                .email(userDto.getEmail())
-                .name(userDto.getName())
-                .userId(userDto.getUserId())
-                .encryptedPwd(userDto.getEncryptedPwd())
-                .build();
-    }
 }

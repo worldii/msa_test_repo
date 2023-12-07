@@ -1,8 +1,8 @@
-package com.example.userservice.dto;
+package com.example.userservice.domain.dto;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-import com.example.userservice.model.UserEntity;
+import com.example.userservice.domain.UserEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import lombok.AllArgsConstructor;

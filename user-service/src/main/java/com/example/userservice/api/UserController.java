@@ -1,12 +1,12 @@
-package com.example.userservice.controller;
+package com.example.userservice.api;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-import com.example.userservice.dto.Greeting;
-import com.example.userservice.dto.UserOrderResponse;
-import com.example.userservice.dto.UserRequest;
-import com.example.userservice.dto.UserResponse;
+import com.example.userservice.domain.dto.CreateUserRequest;
+import com.example.userservice.domain.dto.Greeting;
+import com.example.userservice.domain.dto.UserOrderResponse;
+import com.example.userservice.domain.dto.UserResponse;
 import com.example.userservice.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserResponse> createUser(final @RequestBody UserRequest user) {
+    public ResponseEntity<UserResponse> createUser(final @RequestBody CreateUserRequest user) {
         return new ResponseEntity<>(userService.createUser(user), CREATED);
     }
 

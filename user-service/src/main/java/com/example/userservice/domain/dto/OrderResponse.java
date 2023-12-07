@@ -1,4 +1,4 @@
-package com.example.userservice.dto;
+package com.example.userservice.domain.dto;
 
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponse {
+
     private String productId;
     private Integer qty;
     private Integer unitPrice;

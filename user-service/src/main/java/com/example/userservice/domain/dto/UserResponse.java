@@ -1,6 +1,6 @@
-package com.example.userservice.dto;
+package com.example.userservice.domain.dto;
 
-import com.example.userservice.model.UserEntity;
+import com.example.userservice.domain.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,11 @@ public class UserResponse {
 
     public static UserResponse toUserDto(final UserEntity userEntity) {
         return new UserResponse(
-                userEntity.getId(),
-                userEntity.getEmail(),
-                userEntity.getName(),
-                userEntity.getUserId(),
-                userEntity.getEncryptedPwd()
+            userEntity.getId(),
+            userEntity.getEmail(),
+            userEntity.getName(),
+            userEntity.getUserId(),
+            userEntity.getEncryptedPwd()
         );
     }
 }

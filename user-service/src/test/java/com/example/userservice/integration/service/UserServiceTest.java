@@ -1,21 +1,18 @@
-package com.example.userservice.integration;
+package com.example.userservice.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.userservice.config.PasswordConfig;
-import com.example.userservice.dto.UserOrderResponse;
-import com.example.userservice.dto.UserRequest;
-import com.example.userservice.dto.UserResponse;
+import com.example.userservice.domain.dto.CreateUserRequest;
+import com.example.userservice.domain.dto.UserOrderResponse;
+import com.example.userservice.domain.dto.UserResponse;
 import com.example.userservice.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
@@ -30,16 +27,16 @@ class UserServiceTest {
     @DisplayName("user를 정상적으로 생성하는 테스트")
     void createUserTestWithSuccess() {
         // given
-        final UserRequest userRequest = UserRequest.builder()
+        final CreateUserRequest createUserRequest = CreateUserRequest.builder()
             .email("aaa@naver.com")
             .name("aaa")
             .pwd("1234")
             .build();
-        
+
         // when
-        final UserResponse user = userService.createUser(userRequest);
+        final UserResponse user = userService.createUser(createUserRequest);
         // then
-        assertThat(user).extracting("email").isEqualTo(userRequest.getEmail());
+        assertThat(user).extracting("email").isEqualTo(createUserRequest.getEmail());
     }
 
     @Test
