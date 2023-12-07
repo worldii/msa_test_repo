@@ -58,7 +58,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         final String userEmail = authResult.getName();
         final LoginSuccessResponse loginInfo = userService.getUserDetailsByEmail(userEmail);
         final String token = tokenService.generateToken(loginInfo.getUserId());
-
+        log.info("token: {}", token);
         addTokenToHeader(response, loginInfo.getUserId(), token);
     }
 

@@ -11,13 +11,17 @@ public class TokenService {
 
     private final String secretKey;
     private final Long expireTime;
+    private final JwtUtil jwtUtil;
 
     public TokenService(
         @Value("${token.secret}") final String secretKey,
-        @Value("${token.expiration_time}") final Long expireTime
+        @Value("${token.expiration_time}") final Long expireTime,
+        final JwtUtil jwtUtil
+
     ) {
         this.secretKey = secretKey;
         this.expireTime = expireTime;
+        this.jwtUtil = jwtUtil;
     }
 
     public String generateToken(final String userId) {

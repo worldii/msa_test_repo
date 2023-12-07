@@ -14,7 +14,7 @@ class TokenServiceTest {
 
     @BeforeEach
     void init() {
-        tokenService = new TokenService("secretKey", 1000L);
+        tokenService = new TokenService("secretKey", 1000L, null);
     }
 
     @Test
@@ -22,6 +22,7 @@ class TokenServiceTest {
     void createTokenWithSuccess() {
         // given
         final String userId = "jongha";
+
         // when
         final String generatedToken = tokenService.generateToken(userId);
         // then
