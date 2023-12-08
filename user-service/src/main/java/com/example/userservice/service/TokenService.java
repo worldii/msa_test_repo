@@ -1,8 +1,10 @@
 package com.example.userservice.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.sql.Date;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +13,13 @@ public class TokenService {
 
     private final String secretKey;
     private final Long expireTime;
-    private final JwtUtil jwtUtil;
 
     public TokenService(
         @Value("${token.secret}") final String secretKey,
-        @Value("${token.expiration_time}") final Long expireTime,
-        final JwtUtil jwtUtil
-
+        @Value("${token.expiration_time}") final Long expireTime
     ) {
         this.secretKey = secretKey;
         this.expireTime = expireTime;
-        this.jwtUtil = jwtUtil;
     }
 
     public String generateToken(final String userId) {
@@ -30,5 +28,24 @@ public class TokenService {
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .setSubject(userId)
             .compact();
+    }
+
+    public void tokenValidate(final String token) {
+        if (token == null || token.isEmpty() || token.isBlank()) {
+            throw new IllegalArgumentException("토큰이 존재하지 않습니다.");
+        }
+        try {
+            final Claims body = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+            final String userId = body.getSubject();
+
+            if (userId == null || userId.isEmpty() || userId.isBlank()) {
+                throw new IllegalArgumentException("토큰이 존재하지 않습니다.");
+            }
+        } catch (ExpiredJwtException e) {
+            throw new IllegalArgumentException("토큰이 만료되었습니다.");
+        }
     }
 }

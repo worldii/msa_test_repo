@@ -1,11 +1,14 @@
 package com.example.userservice.integration.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import com.example.userservice.service.TokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 @DisplayName("TokenService 단위 테스트")
 class TokenServiceTest {
@@ -14,7 +17,7 @@ class TokenServiceTest {
 
     @BeforeEach
     void init() {
-        tokenService = new TokenService("secretKey", 1000L, null);
+        tokenService = new TokenService("secretKey", 1000L);
     }
 
     @Test
@@ -27,5 +30,43 @@ class TokenServiceTest {
         final String generatedToken = tokenService.generateToken(userId);
         // then
         assertThat(generatedToken).isNotNull();
+    }
+
+    @Test
+    @DisplayName("토큰을 정상적으로 검증한다.")
+    void validateTokenWithSuccess() {
+        // given
+        final String userId = "jongha";
+        final String generatedToken = tokenService.generateToken(userId);
+
+        // when && then
+        assertThatCode(() -> tokenService.tokenValidate(generatedToken))
+            .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @DisplayName("토큰이 존재하지 않으면 예외를 던진다.")
+    @NullAndEmptySource
+    void validateTokenWithFail(String token) {
+        // given
+        // when && then
+        assertThatCode(() -> tokenService.tokenValidate(token))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("토큰이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("토큰이 만료되면 예외를 던진다.")
+    void validateTokenWithFail2() {
+        // given
+        tokenService = new TokenService("secretKey", 0L);
+        final String userId = "jongha";
+        final String generatedToken = tokenService.generateToken(userId);
+        System.out.println(generatedToken);
+
+        // when && then
+        assertThatCode(() -> tokenService.tokenValidate(generatedToken))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("토큰이 만료되었습니다.");
     }
 }
