@@ -25,7 +25,7 @@ public class TokenService {
     public String generateToken(final String userId) {
         return Jwts.builder()
             .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .setSubject(userId)
             .compact();
     }
@@ -36,7 +36,7 @@ public class TokenService {
         }
         try {
             final Claims body = Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKey.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
             final String userId = body.getSubject();

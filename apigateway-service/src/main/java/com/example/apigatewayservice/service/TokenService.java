@@ -5,10 +5,12 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class TokenService {
 
     private final String secretKey;
@@ -25,7 +27,7 @@ public class TokenService {
     public String generateToken(final String userId) {
         return Jwts.builder()
             .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
             .setSubject(userId)
             .compact();
     }
@@ -34,9 +36,11 @@ public class TokenService {
         if (token == null || token.isEmpty() || token.isBlank()) {
             throw new IllegalArgumentException("토큰이 존재하지 않습니다.");
         }
+
         try {
+
             final Claims body = Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKey.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
             final String userId = body.getSubject();
