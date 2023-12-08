@@ -6,7 +6,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtUtil {
+public class JwtParser {
 
     public static final String BEARER = "Bearer";
 
@@ -15,6 +15,7 @@ public class JwtUtil {
             final String bearerToken = servletRequest.getHeaders().getFirst(AUTHORIZATION);
 
             nullAndEmptyCheck(bearerToken);
+
             if (bearerToken.startsWith(BEARER)) {
                 return bearerToken.substring(BEARER.length() + 1);
             }
