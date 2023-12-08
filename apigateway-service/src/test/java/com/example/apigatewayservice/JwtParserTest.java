@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 @DisplayName("JwtUtilService 토큰 파싱 테스트")
 @ExtendWith(MockitoExtension.class)

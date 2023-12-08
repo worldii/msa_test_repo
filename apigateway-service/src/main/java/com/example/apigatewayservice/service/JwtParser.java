@@ -2,7 +2,7 @@ package com.example.apigatewayservice.service;
 
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
-import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 @Component

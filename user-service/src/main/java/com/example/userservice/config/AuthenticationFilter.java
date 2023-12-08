@@ -38,6 +38,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 loginRequest.getPassword()
             );
             return authenticationManager.authenticate(authentication);
+            
         } catch (AuthenticationException e) {
             throw new RuntimeException("Authentication failed");
         } catch (IOException e) {
