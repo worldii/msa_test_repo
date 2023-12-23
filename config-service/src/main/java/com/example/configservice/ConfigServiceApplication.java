@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
-@EnableConfigServer
+@EnableConfigServer // 컨피그 서버 역할 명시
 public class ConfigServiceApplication {
 
 	public static void main(String[] args) {
