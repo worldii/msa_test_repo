@@ -34,6 +34,7 @@ public class WebSecurityConfig {
             )
             .authorizeHttpRequests(
                 authorizeRequest -> authorizeRequest
+                    .requestMatchers("/actuator/**").permitAll()
                     .requestMatchers("/**").permitAll()
                     .requestMatchers(PathRequest.toH2Console()).permitAll()
             )
