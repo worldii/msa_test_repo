@@ -1,0 +1,7 @@
+# application보다 우선순위가 높다. -> bootstrap.yml 먼저 읽혀진다.
+
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: ecommerce
