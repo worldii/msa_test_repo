@@ -8,4 +8,5 @@ spring:
     config:
       server:
         git:
-          uri: file:///Users/jonghapark/git-local-repo
+          uri: https://github.com/worldii/spring-cloud-config.git
+
